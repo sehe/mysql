@@ -133,6 +133,16 @@ public:
     error_info& shared_info() noexcept { return shared_info_; }
 };
 
+// Helper class to get move semantics right for some I/O object types
+template <class Stream>
+struct null_channel_deleter
+{
+    void operator()(channel<Stream>*) const noexcept {}
+};
+
+template <class Stream>
+using channel_observer_ptr = std::unique_ptr<channel<Stream>, null_channel_deleter<Stream>>;
+
 } // detail
 } // mysql
 } // boost

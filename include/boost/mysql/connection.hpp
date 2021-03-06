@@ -86,6 +86,24 @@ public:
     }
 
     /**
+      * \brief Move constructor.
+      * \details The constructed connection will be valid if `other` is valid.
+      * After this operation, `other` is guaranteed to be invalid.
+      */
+    connection(connection&& other) = default;
+
+    /**
+      * \brief Move assignment.
+      * \details The assigned-to connection will be valid if `other` is valid.
+      */
+    connection& operator=(connection&& rhs) = default;
+
+#ifndef BOOST_MYSQL_DOXYGEN
+    connection(const connection&) = delete;
+    connection& operator=(const connection&) = delete;
+#endif
+
+    /**
      * \brief Returns `true` if the object is in a valid state.
      * \details This function always returns `true` except for moved-from
      * connections. Being `valid()` is a precondition for all network

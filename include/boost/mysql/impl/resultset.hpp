@@ -16,35 +16,6 @@
 #include <memory>
 
 template <class Stream>
-boost::mysql::resultset<Stream>::resultset(
-    boost::mysql::resultset<Stream>&& other
-) noexcept :
-    deserializer_(other.deserializer_),
-    channel_(other.channel_),
-    meta_(std::move(other.meta_)),
-    ok_packet_buffer_(std::move(other.ok_packet_buffer_)),
-    ok_packet_(other.ok_packet_),
-    eof_received_(other.eof_received_)
-{
-    other.channel_ = nullptr; // mark the moved-from resultset as invalid
-}
-
-template <class Stream>
-boost::mysql::resultset<Stream>& boost::mysql::resultset<Stream>::operator=(
-    boost::mysql::resultset<Stream>&& other
-) noexcept
-{
-    deserializer_ = other.deserializer_;
-    channel_ = other.channel_;
-    meta_ = std::move(other.meta_);
-    ok_packet_buffer_ = std::move(other.ok_packet_buffer_);
-    ok_packet_ = other.ok_packet_;
-    eof_received_ = other.eof_received_;
-    other.channel_ = nullptr; // mark the moved-from resultset as invalid
-    return *this;
-}
-
-template <class Stream>
 bool boost::mysql::resultset<Stream>::read_one(
 	row& output,
     error_code& err,

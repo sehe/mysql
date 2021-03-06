@@ -40,7 +40,7 @@ template <
 class resultset
 {
     detail::deserialize_row_fn deserializer_ {};
-    detail::channel<Stream>* channel_;
+    detail::channel_observer_ptr<Stream> channel_;
     detail::resultset_metadata meta_;
     detail::bytestring ok_packet_buffer_;
     detail::ok_packet ok_packet_;
@@ -62,14 +62,13 @@ class resultset
       * \details The constructed resultset will be valid if `other` is valid.
       * After this operation, `other` is guaranteed to be invalid.
       */
-    resultset(resultset&& other) noexcept;
+    resultset(resultset&& other) = default;
 
     /**
       * \brief Move assignment.
       * \details The assigned-to resultset will be valid if `other` is valid.
-      * After this operation, `rhs` is guaranteed to be invalid.
       */
-    resultset& operator=(resultset&& rhs) noexcept;
+    resultset& operator=(resultset&& rhs) = default;
 
 #ifndef BOOST_MYSQL_DOXYGEN
     resultset(const resultset&) = delete;

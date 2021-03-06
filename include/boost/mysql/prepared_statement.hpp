@@ -45,7 +45,7 @@ constexpr std::array<value, 0> no_statement_params {};
 template <class Stream>
 class prepared_statement
 {
-    detail::channel<Stream>* channel_ {};
+    detail::channel_observer_ptr<Stream> channel_;
     detail::com_stmt_prepare_ok_packet stmt_msg_;
 
     template <class ValueForwardIterator>
@@ -66,14 +66,13 @@ public:
       * \details The constructed statement will be valid if `other` is valid.
       * After this operation, `other` is guaranteed to be invalid.
       */
-    prepared_statement(prepared_statement&& other) noexcept;
+    prepared_statement(prepared_statement&& other) = default;
 
     /**
       * \brief Move assignment.
       * \details The assigned-to statement will be valid if `other` is valid.
-      * After this operation, `rhs` is guaranteed to be invalid.
       */
-    prepared_statement& operator=(prepared_statement&& rhs) noexcept;
+    prepared_statement& operator=(prepared_statement&& rhs) = default;
 
 #ifndef BOOST_MYSQL_DOXYGEN
     prepared_statement(const prepared_statement&) = delete;
