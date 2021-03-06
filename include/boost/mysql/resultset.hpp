@@ -57,6 +57,13 @@ class resultset
     /// \details Default constructed resultsets have [refmem resultset valid] return `false`.
     resultset(): channel_(nullptr) {};
 
+    resultset(resultset&& other) noexcept;
+    resultset& operator=(resultset&& rhs) noexcept;
+
+    resultset(const resultset&) = delete;
+    resultset& operator=(const resultset&) = delete;
+
+
 #ifndef BOOST_MYSQL_DOXYGEN
     // Private, do not use
     resultset(detail::channel<Stream>& channel, detail::resultset_metadata&& meta,
