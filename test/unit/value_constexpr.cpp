@@ -200,7 +200,7 @@ BOOST_AUTO_TEST_CASE(time_type)
     static_assert(v >= value(), "");
 
     #ifndef BOOST_NO_CXX17_HDR_OPTIONAL
-    static_assert(v.get_std_optional<time>(), "");
+    static_assert(v.get_std_optional<boost::mysql::time>(), "");
     #endif
 }
 
