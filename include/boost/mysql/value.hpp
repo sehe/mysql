@@ -13,6 +13,7 @@
 #include <chrono>
 #include <ostream>
 #include <array>
+#include <exception>
 #include <boost/variant2/variant.hpp>
 #include <boost/optional/optional.hpp>
 #ifndef BOOST_NO_CXX17_HDR_OPTIONAL
@@ -40,6 +41,13 @@ using time = std::chrono::microseconds;
 
 /// Monostate type representing a NULL value.
 using null_t = boost::variant2::monostate;
+
+/// Exception type thrown when trying to access a [reflink value] with an incorrect type.
+class bad_value_access : public std::exception
+{
+public:
+    const char* what() const noexcept override { return "bad_value_access"; }
+};
 
 /**
  * \brief Represents a value in the database of any of the allowed types.
@@ -153,7 +161,7 @@ public:
      * If the stored value is a `T`, or can be converted to `T` using
      * one of [link mysql.values.conversions the allowed conversions],
      * returns the converted value. Otherwise throws
-     * `boost::variant2::bad_variant_access`.
+     * [reflink bad_value_access].
      */
     template <class T>
     T get() const;

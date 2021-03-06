@@ -168,7 +168,7 @@ T boost::mysql::value::get() const
 {
     auto res = get_optional<T>();
     if (!res)
-        throw boost::variant2::bad_variant_access();
+        throw bad_value_access();
     return *res;
 }
 

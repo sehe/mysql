@@ -20,6 +20,7 @@
 			<member><link linkend="mysql.ref.boost__mysql__prepared_statement">prepared_statement</link></member>
 			<member><link linkend="mysql.ref.boost__mysql__resultset">resultset</link></member>
 			<member><link linkend="mysql.ref.boost__mysql__value">value</link></member>
+			<member><link linkend="mysql.ref.boost__mysql__bad_value_access">bad_value_access</link></member>
 			<member><link linkend="mysql.ref.boost__mysql__row">row</link></member>
 			<member><link linkend="mysql.ref.boost__mysql__field_metadata">field_metadata</link></member>
 			<member><link linkend="mysql.ref.boost__mysql__connection_params">connection_params</link></member>
