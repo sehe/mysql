@@ -98,8 +98,8 @@ BOOST_AUTO_TEST_CASE(move_assign_valid_to_valid)
     s2 = std::move(s1);
     BOOST_TEST(!s1.valid());
     BOOST_TEST(s2.valid());
-    BOOST_TEST(s2.id() == 1);
-    BOOST_TEST(s2.num_params() == 3);
+    BOOST_TEST(s2.id() == 10);
+    BOOST_TEST(s2.num_params() == 8);
 }
 
 // rebind executor
