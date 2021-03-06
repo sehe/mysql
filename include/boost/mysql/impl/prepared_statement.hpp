@@ -14,6 +14,28 @@
 #include <boost/asio/bind_executor.hpp>
 
 template <class Stream>
+boost::mysql::prepared_statement<Stream>::prepared_statement(
+    boost::mysql::prepared_statement<Stream>&& other
+) noexcept :
+    channel_(other.channel_),
+    stmt_msg_(other.stmt_msg_)
+{
+    other.channel_ = nullptr; // Mark other as invalid
+}
+
+template <class Stream>
+boost::mysql::prepared_statement<Stream>& 
+boost::mysql::prepared_statement<Stream>::operator=(
+    boost::mysql::prepared_statement<Stream>&& rhs
+) noexcept
+{
+    channel_ = rhs.channel_;
+    stmt_msg_ = rhs.stmt_msg_;
+    rhs.channel_ = nullptr;
+    return *this;
+}
+
+template <class Stream>
 template <class ValueForwardIterator>
 void boost::mysql::prepared_statement<Stream>::check_num_params(
     ValueForwardIterator first,

@@ -17,19 +17,6 @@ using chan_t = boost::mysql::detail::channel<boost::mysql::test::test_stream>;
 
 BOOST_AUTO_TEST_SUITE(test_resultset)
 
-BOOST_AUTO_TEST_CASE(rebind_executor)
-{
-    using other_executor = boost::asio::strand<boost::asio::io_context::executor_type>;
-    using rebound_type = boost::mysql::tcp_resultset::rebind_executor<other_executor>::other;
-    using expected_type = boost::mysql::resultset<
-        boost::asio::basic_stream_socket<
-            boost::asio::ip::tcp,
-            other_executor
-        >
-    >;
-    BOOST_TEST((std::is_same<rebound_type, expected_type>::value));
-}
-
 // default ctor
 BOOST_AUTO_TEST_CASE(default_ctor)
 {
@@ -95,5 +82,18 @@ BOOST_AUTO_TEST_CASE(move_assign_valid_to_valid)
     BOOST_TEST(r2.valid());
 }
 
+// rebind executor
+BOOST_AUTO_TEST_CASE(rebind_executor)
+{
+    using other_executor = boost::asio::strand<boost::asio::io_context::executor_type>;
+    using rebound_type = boost::mysql::tcp_resultset::rebind_executor<other_executor>::other;
+    using expected_type = boost::mysql::resultset<
+        boost::asio::basic_stream_socket<
+            boost::asio::ip::tcp,
+            other_executor
+        >
+    >;
+    BOOST_TEST((std::is_same<rebound_type, expected_type>::value));
+}
 
 BOOST_AUTO_TEST_SUITE_END() // test_resultset
