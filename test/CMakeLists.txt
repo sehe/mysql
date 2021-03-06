@@ -43,6 +43,7 @@ add_executable(
     unit/detail/protocol/row_deserialization.cpp
     unit/metadata.cpp
     unit/value.cpp
+    unit/value_constexpr.cpp
     unit/row.cpp
     unit/error.cpp
     unit/execute_params.cpp

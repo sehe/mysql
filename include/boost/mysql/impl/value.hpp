@@ -126,6 +126,19 @@ BOOST_CXX14_CONSTEXPR Optional<T> get_optional_impl(
     return res ? Optional<T>(*res) : value_converter<T, Optional>::convert(val);
 }
 
+// Helper class to implement is_convertible_to
+// We can't use a boost::optional because it's not a literal type,
+// and std::optional is only available in C++17
+template <typename T>
+class is_convertible_to_helper
+{
+    bool has_value_ {false};
+public:
+    constexpr is_convertible_to_helper() = default;
+    constexpr is_convertible_to_helper(const T&) noexcept : has_value_(true) {}
+    constexpr bool has_value() const noexcept { return has_value_; }
+};
+
 } // detail
 } // mysql
 } // boost
@@ -147,6 +160,12 @@ BOOST_CXX14_CONSTEXPR boost::mysql::value::value(
         >::type()
     )
 {
+}
+
+template <class T>
+BOOST_CXX14_CONSTEXPR bool boost::mysql::value::is_convertible_to() const noexcept
+{
+    return detail::get_optional_impl<T, detail::is_convertible_to_helper>(repr_).has_value();
 }
 
 template <class T>

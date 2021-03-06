@@ -150,10 +150,7 @@ public:
      * [refmem value get_std_optional] and check the returned optional instead.
      */
     template <class T>
-    BOOST_CXX14_CONSTEXPR bool is_convertible_to() const noexcept
-    {
-        return get_optional<T>().has_value();
-    }
+    BOOST_CXX14_CONSTEXPR bool is_convertible_to() const noexcept;
 
     /**
      * \brief Retrieves the stored value or throws an exception.
