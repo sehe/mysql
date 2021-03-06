@@ -8,6 +8,8 @@
 #ifndef BOOST_MYSQL_CONNECTION_HPP
 #define BOOST_MYSQL_CONNECTION_HPP
 
+#include <boost/asio/ssl/context.hpp>
+#include <type_traits>
 #ifndef BOOST_MYSQL_DOXYGEN // For some arcane reason, Doxygen fails to expand Asio macros without this
 #include "boost/mysql/detail/protocol/channel.hpp"
 #include "boost/mysql/detail/protocol/protocol_types.hpp"
@@ -79,9 +81,21 @@ public:
      * The constructed connection will have [refmem connection valid]
      * return `true`.
      */
-    template <class... Args>
+    template<
+        class... Args,
+        class EnableIf = typename std::enable_if<std::is_constructible<Stream, Args...>::value>::type
+    >
     connection(Args&&... args) :
-        channel_(new detail::channel<Stream>(std::forward<Args>(args)...))
+        channel_(new detail::channel<Stream>(nullptr, std::forward<Args>(args)...))
+    {
+    }
+
+    template<
+        class... Args,
+        class EnableIf = typename std::enable_if<std::is_constructible<Stream, Args...>::value>::type
+    >
+    connection(boost::asio::ssl::context& ctx, Args&&... args) :
+        channel_(new detail::channel<Stream>(&ctx, std::forward<Args>(args)...))
     {
     }
 

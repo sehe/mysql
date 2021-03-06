@@ -38,6 +38,7 @@ class channel
             stream (base_stream, ctx) {}
     };
 
+    boost::asio::ssl::context* external_ctx_ {nullptr};
     Stream stream_;
     boost::optional<ssl_block> ssl_block_;
     std::uint8_t sequence_number_ {0};
@@ -71,8 +72,14 @@ class channel
     struct read_op;
     struct write_op;
 public:
+    channel() = default; // Simplify life if stream is default constructible, mainly for tests
+
     template <class... Args>
-    channel(Args&&... args): stream_(std::forward<Args>(args)...) {}
+    channel(boost::asio::ssl::context* ctx, Args&&... args) : 
+        external_ctx_{ctx},
+        stream_(std::forward<Args>(args)...) 
+    {
+    }
 
     // Executor
     using executor_type = typename Stream::executor_type;
