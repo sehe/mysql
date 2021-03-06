@@ -5,8 +5,8 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef placeholder
-#define placeholder
+#ifndef BOOST_MYSQL_TEST_COMMON_TEST_STREAM_HPP
+#define BOOST_MYSQL_TEST_COMMON_TEST_STREAM_HPP
 
 #include <boost/asio/executor.hpp>
 #include <boost/mysql/error.hpp>
