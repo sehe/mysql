@@ -90,7 +90,7 @@ public:
       * Caution: `value(NULL)` will __NOT__ match this overload. It will try to construct
       * a `boost::string_view` from a NULL C string, causing undefined behavior.
       */
-    BOOST_CXX14_CONSTEXPR value(std::nullptr_t) noexcept {}
+    BOOST_CXX14_CONSTEXPR value(std::nullptr_t) noexcept : repr_(null_t()) {}
 
     /**
      * \brief Initialization constructor.
