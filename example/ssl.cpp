@@ -78,7 +78,7 @@ void main_impl(int argc, char** argv)
         argv[2],               // password
         "boost_mysql_examples",// database to use; leave empty or omit the parameter for no database
         boost::mysql::collation::utf8_general_ci, // character set and collation to use (this is the default)
-        boost::mysql::ssl_options(boost::mysql::ssl_mode::require) // require SSL; if the server doesn't support it, fail
+        boost::mysql::ssl_mode::require // require SSL; if the server doesn't support it, fail
     );
 
     boost::asio::io_context ctx;

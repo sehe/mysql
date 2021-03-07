@@ -19,14 +19,10 @@
 // This is used by the build script to exclude these tests on databases
 // that do not support this functionality
 
-namespace net = boost::asio;
 using namespace boost::mysql::test;
 
 using boost::mysql::socket_connection;
 using boost::mysql::ssl_mode;
-using boost::mysql::ssl_options;
-using boost::mysql::detail::make_error_code;
-using boost::mysql::error_info;
 using boost::mysql::errc;
 using boost::mysql::error_code;
 using boost::mysql::tcp_connection;
@@ -42,7 +38,7 @@ network_result<no_result> do_handshake(
     ssl_mode ssl
 )
 {
-    params.set_ssl(boost::mysql::ssl_options(ssl));
+    params.set_ssl(ssl);
     return net->handshake(conn, params);
 }
 

@@ -92,7 +92,7 @@ struct network_fixture
 
     void handshake(ssl_mode m = ssl_mode::require)
     {
-        params.set_ssl(ssl_options(m));
+        params.set_ssl(m);
         conn.handshake(params);
         validate_ssl(conn, m);
     }
