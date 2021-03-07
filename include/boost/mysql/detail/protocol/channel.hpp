@@ -28,19 +28,10 @@ template <class Stream>
 class channel
 {
     // TODO: static asserts for Stream concept
-    struct ssl_block
-    {
-        boost::asio::ssl::context ctx;
-        boost::asio::ssl::stream<Stream&> stream;
-
-        ssl_block(Stream& base_stream):
-            ctx(boost::asio::ssl::context::tls_client),
-            stream (base_stream, ctx) {}
-    };
-
-    boost::asio::ssl::context* external_ctx_ {nullptr};
+    boost::asio::ssl::context* external_ctx_ {nullptr};    // if one was externally provided
+    boost::optional<boost::asio::ssl::context> local_ctx_; // if one was not provided
+    boost::optional<boost::asio::ssl::stream<Stream&>> ssl_stream_;
     Stream stream_;
-    boost::optional<ssl_block> ssl_block_;
     std::uint8_t sequence_number_ {0};
     std::array<std::uint8_t, 4> header_buffer_ {}; // for async ops
     bytestring shared_buff_; // for async ops
@@ -53,7 +44,7 @@ class channel
     error_code process_header_read(std::uint32_t& size_to_read); // reads from header_buffer_
     void process_header_write(std::uint32_t size_to_write); // writes to header_buffer_
 
-    void create_ssl_block() { ssl_block_.emplace(stream_); }
+    void create_ssl_stream();
 
     template <class BufferSeq>
     std::size_t read_impl(BufferSeq&& buff, error_code& ec);
@@ -111,7 +102,7 @@ public:
     }
 
     // SSL
-    bool ssl_active() const noexcept { return ssl_block_.has_value(); }
+    bool ssl_active() const noexcept { return ssl_stream_.has_value(); }
 
     void ssl_handshake(error_code& ec);
 
