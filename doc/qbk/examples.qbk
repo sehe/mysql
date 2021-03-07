@@ -190,7 +190,7 @@ exceptions as error handling. __see_error_handling__
 
 __assume_setup__ Additionally, you should run your MySQL server
 with some test certificates we created your you, just for this example.
-You can find them in this project's GitHub repository, under `$BOOST_MYQL_ROOT/tools/ssl`.
+You can find them in this project's GitHub repository, under `BOOST_MYQL_ROOT/tools/ssl`.
 
 [import ../../example/ssl.cpp]
 [example_ssl]
