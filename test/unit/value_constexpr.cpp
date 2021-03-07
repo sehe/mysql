@@ -18,7 +18,9 @@ using boost::mysql::date;
 using boost::mysql::days;
 using vt = boost::mysql::value::variant_type;
 
-BOOST_AUTO_TEST_SUITE(test_value_constexpr_cxx14)
+#ifndef BOOST_NO_CXX14_CONSTEXPR
+
+BOOST_AUTO_TEST_SUITE(test_value_constexpr)
 
 BOOST_AUTO_TEST_CASE(null_type)
 {
@@ -38,13 +40,6 @@ BOOST_AUTO_TEST_CASE(null_type)
     static_assert(v.get_std_optional<null_t>(), "");
     #endif
 }
-
-        // float,             // FLOAT
-        // double,            // DOUBLE
-        // date,              // DATE
-        // datetime,          // DATETIME, TIMESTAMP
-        // time               // TIME
-
 
 BOOST_AUTO_TEST_CASE(int64_t_type)
 {
@@ -205,3 +200,5 @@ BOOST_AUTO_TEST_CASE(time_type)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+#endif
