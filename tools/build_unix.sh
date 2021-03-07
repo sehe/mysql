@@ -56,7 +56,7 @@ function setup_db {
         fi
         cp tools/osx-ci.cnf ~/.my.cnf
         sudo mkdir -p /etc/ssl/certs/mysql/
-        sudo cp tools/docker/*.pem /etc/ssl/certs/mysql/
+        sudo cp tools/ssl/*.pem /etc/ssl/certs/mysql/
         mysql.server start # Note that running this with sudo fails
         mysql -u root < test/integration/db_setup.sql
         mysql -u root < test/integration/db_setup_sha256.sql
